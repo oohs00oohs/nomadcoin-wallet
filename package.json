@@ -1,9 +1,14 @@
 {
   "scripts": {
-    "start":"electron main.js"
+    "start": "concurrently --kill-others \" yarn run startReact \" \"cross-env ENV=dev electron .\"",
+    "startReact": "cd uidev && npm start"
   },
+  "main": "main.js",
   "devDependencies": {
     "concurrently": "^4.1.0",
     "electron": "^4.0.2"
+  },
+  "dependencies": {
+    "cross-env": "^5.2.0"
   }
 }

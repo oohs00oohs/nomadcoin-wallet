@@ -15,12 +15,9 @@ const  createWindow = () => {
     });
 
     const ENV = process.env.ENV;
-    console.log(ENV);
     if(ENV === "dev"){
-        console.log('env is dev');
         mainWindow.loadURL("http://localhost:3000");
     } else {
-        console.log('env is not dev');
         mainWindow.loadURL(
             url.format({
                 pathname: path.join(__dirname, "uidev/build/index.html"),
