@@ -6,6 +6,7 @@ import axios from "axios";
 import typography from "../../typography";
 import { MASTER_NODE, SELF_NODE, SELF_P2P_NODE} from "../../constants";
 import AppPresenter from "./AppPresenter";
+import { async } from "rxjs/internal/scheduler/async";
 
 const baseStyles = () => createGlobalStyle`
   ${reset};
@@ -17,7 +18,8 @@ const baseStyles = () => createGlobalStyle`
 
 class AppContainer extends Component {
   state = {
-    isLoading: true
+    isLoading: true,
+    isMining: false
   };
   static propTypes = {
     sharedPort: PropTypes.number.isRequired
@@ -26,11 +28,13 @@ class AppContainer extends Component {
     const {sharedPort} = this.props;
     this._registerOnMaster(sharedPort);
     this._getAddress(sharedPort);
+    this._getBalance(sharedPort);
+    setInterval(() => this._getBalance(sharedPort), 1000);
   }
 
   render() {
     baseStyles();
-    return <AppPresenter {...this.state} />;
+    return <AppPresenter {...this.state} mineBlock={this._mineBlock}/>;
   }
 
   _registerOnMaster = async port => {
@@ -42,8 +46,30 @@ class AppContainer extends Component {
   _getAddress = async (port) => {
     const request = await axios.get(`${SELF_NODE(port)}/me/address`);
     this.setState({
-      address: request.data
+      address: request.data,
+      isLoading : false
     })
+  };
+
+  _getBalance = async(port) => {
+    const request = await axios.get(`${SELF_NODE(port)}/me/balance`);
+    const {balance} = request.data;
+
+    this.setState({
+      balance
+    })
+  };
+
+  _mineBlock = async() => {
+    const { sharedPort } = this.props;
+    this.setState({
+      isMining: true
+    })
+    const request = await axios.post(`${SELF_NODE(sharedPort)}/blocks`);
+    this.setState({
+      isMining: false
+    })
+
   }
 }
 
