@@ -1,0 +1,20 @@
+{
+  "name": "Nomadcoin-Wallet",
+  "scripts": {
+    "start": "concurrently --kill-others \" yarn run startReact \" \"cross-env ENV=dev electron .\"",
+    "startReact": "cd uidev && npm start",
+    "build": "electron-packager . --prune=false --ignore=/uidev --overwrite --out=dist",
+    "prebuild": "yarn run deleteWallet && cd uidev && npm run build",
+    "deleteWallet": "rm -rf nomadcoin/src/privateKey"
+  },
+  "main": "main.js",
+  "devDependencies": {
+    "concurrently": "^4.1.0",
+    "electron": "^4.0.2",
+    "electron-packager": "^13.0.1"
+  },
+  "dependencies": {
+    "cross-env": "^5.2.0",
+    "get-port": "^4.1.0"
+  }
+}

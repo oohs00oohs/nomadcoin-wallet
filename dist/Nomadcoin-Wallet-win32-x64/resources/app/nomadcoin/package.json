@@ -1,0 +1,25 @@
+{
+  "name": "nomadcoin",
+  "version": "1.0.0",
+  "description": "Nomadcoin, the most awesome coin made in NodeJS",
+  "main": "src/server.js",
+  "repository": "https://github.com/oohs00oohs/nomadcoin.git",
+  "author": "tndyd <tndyd5390@naver.com>",
+  "license": "MIT",
+  "private": false,
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "cors": "^2.8.5",
+    "crypto-js": "^3.1.9-1",
+    "elliptic": "^6.4.1",
+    "express": "^4.16.4",
+    "hex-to-binary": "^1.0.1",
+    "lodash": "^4.17.11",
+    "morgan": "^1.9.1",
+    "nodemon": "^1.18.9",
+    "ws": "^6.1.2"
+  },
+  "scripts": {
+    "dev": "nodemon src/server.js"
+  }
+}
