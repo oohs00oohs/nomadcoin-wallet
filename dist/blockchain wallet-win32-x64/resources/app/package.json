@@ -1,5 +1,6 @@
 {
   "name": "Nomadcoin-Wallet",
+  "productName" : "blockchain wallet",
   "scripts": {
     "start": "concurrently --kill-others \" yarn run startReact \" \"cross-env ENV=dev electron .\"",
     "startReact": "cd uidev && npm start",
